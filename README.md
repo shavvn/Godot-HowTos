@@ -40,3 +40,36 @@ func _input(event: InputEvent) -> void:
 		else:
 			show()
 ```
+
+### How to move camera following mouse position (RTS style)
+
+e.g. if you want to move the camera to the right when mouse is near the right edge of the viewport
+- Add `Camera2D` child node to the "world" or map node
+- Attach script to the `Camera2D` node
+- Script:
+
+```
+# camera2d
+
+# pan speed
+@onready var pan_speed = 400
+@onready var mouse_margin = 20  # move the camera if the mouse is near the edge
+
+func _process(delta: float) -> void:
+    var move_up_down: float = 0
+	var move_left_right: float = 0
+	var distance = delta * pan_speed
+	var mouse_pos = get_viewport().get_mouse_position()
+	
+	if Input.is_action_pressed("ui_left") or mouse_pos.x < mouse_margin:
+		move_left_right = -1
+	if Input.is_action_pressed("ui_right") or mouse_pos.x > right_bounds - mouse_margin:
+		move_left_right = 1
+	if Input.is_action_pressed("ui_up") or mouse_pos.y < mouse_margin:
+		move_up_down = -1
+	if Input.is_action_pressed("ui_down") or mouse_pos.y > lower_bounds - mouse_margin:
+		move_up_down = 1
+	var move_vec = Vector2(move_left_right * distance, move_up_down * distance)
+	if move_vec.length() > 0:
+		position = position + move_vec
+```
