@@ -73,3 +73,23 @@ func _process(delta: float) -> void:
 	if move_vec.length() > 0:
 		position = position + move_vec
 ```
+
+
+### How to zoom in and out with mouse wheel (RTS style)
+
+- Set InputMap actions, e.g. "mouse_scroll_up" and "mouse_scroll_down"
+- Add `Camera2D` child node to the "world" or map node
+- Attach script to the `Camera2D` node
+- Script:
+```
+
+# zoom scale is 2D vec on both x and y
+@onready var zoom_speed = Vector2(0.1, 0.1)
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("mouse_scroll_up"):
+		var next_zoom = zoom + zoom_speed
+		zoom = next_zoom.clamp(Vector2(0.5, 0.5), Vector2(2.0, 2.0))
+	if Input.is_action_just_pressed("mouse_scroll_down"):
+		var next_zoom = zoom - zoom_speed
+		zoom = next_zoom.clamp(Vector2(0.5, 0.5), Vector2(2.0, 2.0))
+```
