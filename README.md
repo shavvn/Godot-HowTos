@@ -93,3 +93,67 @@ func _process(delta: float) -> void:
 		var next_zoom = zoom - zoom_speed
 		zoom = next_zoom.clamp(Vector2(0.5, 0.5), Vector2(2.0, 2.0))
 ```
+
+### How to create irregularly shaped hexagonal tile maps?
+
+I'm using this asset of hex tiles which have some issues fitting into the Godot hex tilemaps:
+1. The hexagons are not perfectly symmetrical. e.g. the dimensions are 480x406.
+2. The textures "overflows" the bounds of the hexagon. e.g.
+
+![Hex tile](images/hex_tile.png)
+
+Here is what I did in Godot to make tiles fit nicely:
+
+1. Create `TileMapLayer` node, select Hexagon tiles, set tile size to match the actual "inner" hexagon size of the tiles. (480x406)
+2. Change "Tile Offset Axis" to "Vertical Offset" in this case to match the orientation of the tile texture.
+3. Import the texture/asset. In "TileSet" -> "Setup", adjust "Margins" and "Texture Region Size" such that:
+
+	a. The hexgon tile box mostly aligns with the "inner" bounds of the texture
+
+	b. The region should not cut off the "overflow" part of the texture. It should look something like this:
+
+	![setup](images/hex_tile_setup.png)
+4. **Change "Tile Layout" to "Diamond Down"**, this essentially changes how the coordinates of the tiles are oriented, and by using "Diamond Down", it will make proper rendering decision for this type of tile textures: the correct edges are covered by adjacent tiles, while the "overflow" part will over the adjacent tiles. Example:
+
+![tile_example](images/tile_example.png)
+
+5. Duplicate the setup in 3) to other textures using the following method
+
+### How to duplicate TileSet setup to different textures?
+
+The asset pack I'm using unfortunately does not come with an atlas and unfortunately we have to create and setup each individual tileset. But Fortunately this can be done quickly.
+
+1. Save the corrected tile set to a ".tres" file. Using a text editor, the relevant part should look something like this:
+
+```
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_peyie"]
+texture = ExtResource("1_ujgj0")
+margins = Vector2i(227, 140)
+texture_region_size = Vector2i(480, 543)
+0:0/0 = 0
+```
+2. In Godot, import other textures into tile sets, do not change any setup. Save.
+3. Reopen/Refresh the ".tres" file. Edit copy pastes the corresponding properties ("margins" and "texture_region_size" in this case) to all applicable entries. e.g.
+
+
+```
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_peyie"]
+texture = ExtResource("1_ujgj0")
+margins = Vector2i(227, 140)
+texture_region_size = Vector2i(480, 543)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x7jcc"]
+texture = ExtResource("2_02c43")
+margins = Vector2i(227, 140)
+texture_region_size = Vector2i(480, 543)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3j5wi"]
+texture = ExtResource("3_02c43")
+margins = Vector2i(227, 140)
+texture_region_size = Vector2i(480, 543)
+0:0/0 = 0
+```
+
+4. Save the edits in ".tres" file. Godot should referesh to reflect the changes.
