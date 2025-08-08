@@ -53,7 +53,11 @@ e.g. if you want to move the camera to the right when mouse is near the right ed
 
 # pan speed
 @onready var pan_speed = 400
-@onready var mouse_margin = 20  # move the camera if the mouse is near the edge
+# move the camera if the mouse is near the edge, in a real project these should be relative the viewport size
+@onready var left_margin = 20  
+@onready var right_margin = 1200 - 20  
+@onready var top_margin = 800 - 20
+@onready var bottom_margin = 20
 
 func _process(delta: float) -> void:
     var move_up_down: float = 0
@@ -61,13 +65,13 @@ func _process(delta: float) -> void:
 	var distance = delta * pan_speed
 	var mouse_pos = get_viewport().get_mouse_position()
 	
-	if Input.is_action_pressed("ui_left") or mouse_pos.x < mouse_margin:
+	if Input.is_action_pressed("ui_left") or mouse_pos.x < left_margin:
 		move_left_right = -1
-	if Input.is_action_pressed("ui_right") or mouse_pos.x > right_bounds - mouse_margin:
+	if Input.is_action_pressed("ui_right") or mouse_pos.x > right_margin:
 		move_left_right = 1
-	if Input.is_action_pressed("ui_up") or mouse_pos.y < mouse_margin:
+	if Input.is_action_pressed("ui_up") or mouse_pos.y < top_margin:
 		move_up_down = -1
-	if Input.is_action_pressed("ui_down") or mouse_pos.y > lower_bounds - mouse_margin:
+	if Input.is_action_pressed("ui_down") or mouse_pos.y > bottom_margin:
 		move_up_down = 1
 	var move_vec = Vector2(move_left_right * distance, move_up_down * distance)
 	if move_vec.length() > 0:
