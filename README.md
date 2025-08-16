@@ -151,6 +151,12 @@ Here is what I did in Godot to make tiles fit nicely:
 ![tile_example](images/tile_example.png)
 
 5. Duplicate the setup in 3) to other textures using the following method
+</details>
+
+<details>
+<summary>
+How to duplicate TileSet setup to different textures?
+</summary>
 
 ### How to duplicate TileSet setup to different textures?
 
@@ -192,3 +198,12 @@ texture_region_size = Vector2i(480, 543)
 4. Save the edits in ".tres" file. Godot should referesh to reflect the changes.
 
 </details>
+
+<details>
+<summary>
+How to highlight an irregular hexagon tile with shader?
+</summary>
+
+### How to highlight an irregular hexagon tile with shader?
+
+See: [hex-shader](examples/HexTileShader/Readme.md)
