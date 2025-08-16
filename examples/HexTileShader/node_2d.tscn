@@ -1,0 +1,31 @@
+[gd_scene load_steps=7 format=4 uid="uid://531p42a6gy5d"]
+
+[ext_resource type="Shader" uid="uid://cwwyyqb7tybg2" path="res://hextilemap.gdshader" id="1_epypp"]
+[ext_resource type="Texture2D" uid="uid://ct6xsmwoqvf2g" path="res://icon.svg" id="2_0hol4"]
+[ext_resource type="Script" uid="uid://bddikj04obw8w" path="res://HexTileMapLayer.cs" id="3_q6r6c"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kdubu"]
+shader = ExtResource("1_epypp")
+shader_parameter/active_hex_center = Vector2(0, 0)
+shader_parameter/hex_size = Vector2(60, 51)
+shader_parameter/grid_offset = Vector2(0, 0)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d21ai"]
+texture = ExtResource("2_0hol4")
+margins = Vector2i(0, 15)
+texture_region_size = Vector2i(120, 100)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_rj586"]
+tile_shape = 3
+tile_offset_axis = 1
+tile_size = Vector2i(120, 100)
+sources/0 = SubResource("TileSetAtlasSource_d21ai")
+
+[node name="Node2D" type="Node2D"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+material = SubResource("ShaderMaterial_kdubu")
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAABAAMAAAAAAAAAAAACAAQAAAAAAAAAAAADAAQAAAAAAAAAAAADAAMAAAAAAAAAAAAEAAMAAAAAAAAAAAAEAAIAAAAAAAAAAAADAAEAAAAAAAAAAAAEAAEAAAAAAAAAAAADAAAAAAAAAAAAAAACAAAAAAAAAAAAAAABAP//AAAAAAAAAAABAAAAAAAAAAAAAAABAAEAAAAAAAAAAAABAAIAAAAAAAAAAAACAAMAAAAAAAAAAAACAAIAAAAAAAAAAAACAAEAAAAAAAAAAAADAAIAAAAAAAAAAAAEAAQAAAAAAAAAAAAFAAMAAAAAAAAAAAAFAAIAAAAAAAAAAAAFAAEAAAAAAAAAAAAFAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAP//AAAAAAAAAAADAP//AAAAAAAAAAAGAAAAAAAAAAAAAAAGAAEAAAAAAAAAAAAGAAIAAAAAAAAAAAAHAAIAAAAAAAAAAAAGAAMAAAAAAAAAAAAHAAMAAAAAAAAAAAAGAAQAAAAAAAAAAAAGAAUAAAAAAAAAAAAFAAQAAAAAAAAAAAAEAAUAAAAAAAAAAAAAAAQAAAAAAAAAAAABAAQAAAAAAAAAAAACAAUAAAAAAAAAAAAHAP//AAAAAAAAAAAHAAAAAAAAAAAAAAAHAAEAAAAAAAAAAAAHAAQAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_rj586")
+script = ExtResource("3_q6r6c")
