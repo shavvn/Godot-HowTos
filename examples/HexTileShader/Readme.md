@@ -3,7 +3,7 @@
 
 ## What does this shader do?
 
-https://github.com/user-attachments/assets/269f0a99-9ca7-4de2-bdc9-2e1671e8f47f
+https://github.com/user-attachments/assets/01895977-45be-4d92-951c-2581a52ae2fd
 
 The shader in this example project will highlight a hexagon tile in a Godot TileMapLayer which tracks the mouse movement.
 
