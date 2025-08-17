@@ -207,3 +207,38 @@ How to highlight an irregular hexagon tile with shader?
 ### How to highlight an irregular hexagon tile with shader?
 
 See: [hex-shader](examples/HexTileShader/Readme.md)
+</details>
+
+<details>
+<summary>
+How to use Tween Callbacks in C# with args?
+</summary>
+
+### How to use Tween Callbacks in C# with args?
+
+The code below demonstrates two scenarios: using the TweenCallback or connecting with singal:
+
+```c#
+public void SetupTween()
+{
+	var tween = CreateTween();
+	// use TweenCallback to do stuff before/after other tween, need to conver the lamda to Godot.Callable
+	tween.TweenCallback(Callable.From(() => this.PrepForTween(this.Position)));
+	tween.TweenProperty(...);  // do tween stuff
+	// use signal to trigger the call back, need to conver the lamda to Godot.Callable
+	tween.Connect("finished", Callable.From(() => this.OnTweenFinished(this.Color)));
+}
+
+public void PrepForTween(Vector2 arg)
+{
+	// do stuff
+}
+
+public void OnTweenFinished(Color arg)
+{
+	// do stuff
+}
+
+```
+
+</details>
